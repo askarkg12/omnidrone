@@ -1,0 +1,140 @@
+<?xml version="1.0" ?>
+<robot name="omnidrone" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find omnidrone_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find omnidrone_description)/urdf/omnidrone.trans" />
+<xacro:include filename="$(find omnidrone_description)/urdf/omnidrone.gazebo" />
+<link name="base_link">
+  <inertial>
+    <origin xyz="-0.0699118277356881 0.20074010794663588 0.19715855348846115" rpy="0 0 0"/>
+    <mass value="5.605027829488637"/>
+    <inertia ixx="0.045764" iyy="0.007926" izz="0.048806" ixy="9.6e-05" iyz="0.002743" ixz="-5.9e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnidrone_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnidrone_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wheelFL_1">
+  <inertial>
+    <origin xyz="-0.01207740241638977 3.7844985140145226e-07 -3.3043707295399294e-07" rpy="0 0 0"/>
+    <mass value="1.3143689058330494"/>
+    <inertia ixx="0.001108" iyy="0.000684" izz="0.000684" ixy="-0.0" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.156388 -0.322602 -0.180052" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnidrone_description)/meshes/wheelFL_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.156388 -0.322602 -0.180052" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnidrone_description)/meshes/wheelFL_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wheelFR_1">
+  <inertial>
+    <origin xyz="0.012077482726142565 3.7844985140145226e-07 -3.3043707295399294e-07" rpy="0 0 0"/>
+    <mass value="1.3143689058330494"/>
+    <inertia ixx="0.001108" iyy="0.000684" izz="0.000684" ixy="0.0" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.015612 -0.322602 -0.180052" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnidrone_description)/meshes/wheelFR_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.015612 -0.322602 -0.180052" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnidrone_description)/meshes/wheelFR_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wheelRR_4">
+  <inertial>
+    <origin xyz="0.012077482726142565 3.7844985083246296e-07 -3.3043707237112585e-07" rpy="0 0 0"/>
+    <mass value="1.3143689058330494"/>
+    <inertia ixx="0.001108" iyy="0.000684" izz="0.000684" ixy="0.0" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.015612 -0.122602 -0.180052" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnidrone_description)/meshes/wheelRR_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.015612 -0.122602 -0.180052" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnidrone_description)/meshes/wheelRR_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wheelRL_1">
+  <inertial>
+    <origin xyz="-0.012077402416388883 3.7844985083246296e-07 -3.304370723988814e-07" rpy="0 0 0"/>
+    <mass value="1.3143689058330494"/>
+    <inertia ixx="0.001108" iyy="0.000684" izz="0.000684" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.156388 -0.122602 -0.180052" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnidrone_description)/meshes/wheelRL_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.156388 -0.122602 -0.180052" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnidrone_description)/meshes/wheelRL_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="Revolute 1" type="continuous">
+  <origin xyz="-0.156388 0.322602 0.180052" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="wheelFL_1"/>
+  <axis xyz="-1.0 -0.0 -0.0"/>
+</joint>
+
+<joint name="Revolute 2" type="continuous">
+  <origin xyz="0.015612 0.322602 0.180052" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="wheelFR_1"/>
+  <axis xyz="1.0 -0.0 -0.0"/>
+</joint>
+
+<joint name="Revolute 3" type="continuous">
+  <origin xyz="0.015612 0.122602 0.180052" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="wheelRR_4"/>
+  <axis xyz="1.0 -0.0 -0.0"/>
+</joint>
+
+<joint name="Revolute 4" type="continuous">
+  <origin xyz="-0.156388 0.122602 0.180052" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="wheelRL_1"/>
+  <axis xyz="-1.0 -0.0 -0.0"/>
+</joint>
+
+</robot>
