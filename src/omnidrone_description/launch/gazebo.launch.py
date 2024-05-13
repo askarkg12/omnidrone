@@ -10,64 +10,68 @@ from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
-    share_dir = get_package_share_directory('omnidrone_description')
+    share_dir = get_package_share_directory("omnidrone_description")
 
-    xacro_file = os.path.join(share_dir, 'urdf', 'omnidrone.xacro')
+    xacro_file = os.path.join(share_dir, "urdf", "omnidrone.xacro")
     robot_description_config = xacro.process_file(xacro_file)
     robot_urdf = robot_description_config.toxml()
+    rviz_config_file = os.path.join(share_dir, "config", "display.rviz")
 
     robot_state_publisher_node = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        name='robot_state_publisher',
-        parameters=[
-            {'robot_description': robot_urdf}
-        ]
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        name="robot_state_publisher",
+        parameters=[{"robot_description": robot_urdf, "use_sim_time": True}],
     )
 
     joint_state_publisher_node = Node(
-        package='joint_state_publisher',
-        executable='joint_state_publisher',
-        name='joint_state_publisher'
+        package="joint_state_publisher",
+        executable="joint_state_publisher",
+        name="joint_state_publisher",
     )
 
     gazebo_server = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([
-            PathJoinSubstitution([
-                FindPackageShare('gazebo_ros'),
-                'launch',
-                'gzserver.launch.py'
-            ])
-        ]),
-        launch_arguments={
-            'pause': 'true'
-        }.items()
+        PythonLaunchDescriptionSource(
+            [
+                PathJoinSubstitution(
+                    [FindPackageShare("gazebo_ros"), "launch", "gzserver.launch.py"]
+                )
+            ]
+        ),
+        launch_arguments={"pause": "true"}.items(),
     )
 
     gazebo_client = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([
-            PathJoinSubstitution([
-                FindPackageShare('gazebo_ros'),
-                'launch',
-                'gzclient.launch.py'
-            ])
-        ])
+        PythonLaunchDescriptionSource(
+            [
+                PathJoinSubstitution(
+                    [FindPackageShare("gazebo_ros"), "launch", "gzclient.launch.py"]
+                )
+            ]
+        )
     )
 
     urdf_spawn_node = Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
-        arguments=[
-            '-entity', 'omnidrone',
-            '-topic', 'robot_description'
-        ],
-        output='screen'
+        package="gazebo_ros",
+        executable="spawn_entity.py",
+        arguments=["-entity", "omnidrone", "-topic", "robot_description"],
+        output="screen",
     )
 
-    return LaunchDescription([
-        robot_state_publisher_node,
-        joint_state_publisher_node,
-        gazebo_server,
-        gazebo_client,
-        urdf_spawn_node,
-    ])
+    rviz_node = Node(
+        package="rviz2",
+        executable="rviz2",
+        name="rviz2",
+        arguments=["-d", rviz_config_file],
+        output="screen",
+    )
+    return LaunchDescription(
+        [
+            robot_state_publisher_node,
+            # joint_state_publisher_node,
+            gazebo_server,
+            gazebo_client,
+            urdf_spawn_node,
+            rviz_node,
+        ]
+    )

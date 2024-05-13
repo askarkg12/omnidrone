@@ -114,6 +114,7 @@
   <parent link="base_link"/>
   <child link="wheelFL_1"/>
   <axis xyz="-1.0 -0.0 -0.0"/>
+  <dynamics damping="0.5" friction="0.5" />
 </joint>
 
 <joint name="Revolute 2" type="continuous">
@@ -121,6 +122,7 @@
   <parent link="base_link"/>
   <child link="wheelFR_1"/>
   <axis xyz="1.0 -0.0 -0.0"/>
+  <dynamics damping="0.5" friction="0.5" />
 </joint>
 
 <joint name="Revolute 3" type="continuous">
@@ -128,6 +130,7 @@
   <parent link="base_link"/>
   <child link="wheelRR_4"/>
   <axis xyz="1.0 -0.0 -0.0"/>
+  <dynamics damping="0.5" friction="0.5" />
 </joint>
 
 <joint name="Revolute 4" type="continuous">
@@ -135,6 +138,7 @@
   <parent link="base_link"/>
   <child link="wheelRL_1"/>
   <axis xyz="-1.0 -0.0 -0.0"/>
+  <dynamics damping="0.5" friction="0.5" />
 </joint>
 
 </robot>
